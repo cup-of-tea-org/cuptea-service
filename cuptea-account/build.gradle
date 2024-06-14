@@ -1,0 +1,31 @@
+
+
+dependencies {
+    implementation project(':cuptea-db')
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.1.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.modelmapper.extensions:modelmapper-spring:3.1.0'
+    // mail server
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+
+
+}
+
+bootJar.enabled = true
+jar.enabled = false

@@ -1,0 +1,14 @@
+pluginManagement {
+    plugins {
+        id 'org.springframework.boot' version "${springBootVersion}"
+        id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+    }
+}
+
+rootProject.name = 'cuptea'
+include 'cuptea-cloud'
+include 'cuptea-account'
+include 'cuptea-db'
+include 'cuptea-api'
+
+

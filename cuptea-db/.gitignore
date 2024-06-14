@@ -1,0 +1,6 @@
+#Querydsl
+/src/main/generated
+
+#s3 config
+src/main/resources/application.yml
+application.yml
