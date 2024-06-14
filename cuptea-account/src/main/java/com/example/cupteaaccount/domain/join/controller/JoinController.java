@@ -1,7 +1,9 @@
 package com.example.cupteaaccount.domain.join.controller;
 
+import com.example.cupteaaccount.domain.join.controller.annotation.FileIsValid;
 import com.example.cupteaaccount.domain.join.controller.model.dto.EmailRequestDto;
 import com.example.cupteaaccount.domain.join.controller.model.dto.JoinIdOverlappedDto;
+import com.example.cupteaaccount.domain.join.controller.model.vo.FileRequest;
 import com.example.cupteaaccount.domain.join.controller.model.vo.JoinIdOverlappedRequest;
 import com.example.cupteaaccount.domain.join.controller.model.dto.JoinUserDto;
 import com.example.cupteaaccount.domain.join.controller.model.vo.JoinUserRequest;
@@ -13,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,12 +30,14 @@ public class JoinController {
     private final JoinService joinService;
     private final ModelMapper modelMapper;
 
-    @PostMapping()
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ApiResponse(description = "회원가입 API")
     public ResponseEntity<?> join(
-            @RequestBody @Valid final JoinUserRequest joinUserRequest,
+            @RequestPart @Valid final JoinUserRequest joinUserRequest,
+            @RequestPart(required = false, value = "profileImage") @Valid @FileIsValid final MultipartFile profileImage,
             Errors errors
     ) {
+        log.info("multipartFile = {}", profileImage.getOriginalFilename());
         // validation
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());

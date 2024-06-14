@@ -1,13 +1,10 @@
 package com.example.cupteaaccount.domain.join.controller.model.vo;
 
-import com.example.cupteainfrastructure.user.enums.UserRole;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -46,6 +43,4 @@ public class JoinUserRequest {
 
     @NotBlank(message = "소셜 타입이 맞지 않습니다")
     private String socialType;
-
-    private String profileImgName;
 }

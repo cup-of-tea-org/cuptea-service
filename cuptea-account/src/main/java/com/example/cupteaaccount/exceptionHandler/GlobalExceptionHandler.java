@@ -4,6 +4,7 @@ import com.example.cupteaaccount.domain.join.exception.MailSendFailException;
 import com.example.cupteaaccount.domain.login.exception.UserNotFoundException;
 import com.example.cupteaaccount.domain.token.exception.TokenNotFoundException;
 import com.example.cupteaaccount.domain.join.exception.UserJoinFailException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -51,4 +52,12 @@ public class GlobalExceptionHandler {
         log.error("", e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException constraintViolationException) {
+
+        constraintViolationException.getConstraintViolations().stream().peek(o -> log.error(o.getMessage()));
+
+        return new ResponseEntity<>("파일 입력 에러입니다.", HttpStatus.BAD_REQUEST);
+    }
+
 }
