@@ -86,7 +86,7 @@ public class JoinController {
     }
 
     // TODO 이메일 코드 검증 API 생성
-    @PostMapping("/validate-email-code-")
+    @PostMapping("/validate-email-code")
     @ApiResponse(description = "이메일 코드 검증 API")
     public ResponseEntity<?> emailCodeValidate(
             @RequestBody @Valid final EmailCodeRequest emailCodeRequest,

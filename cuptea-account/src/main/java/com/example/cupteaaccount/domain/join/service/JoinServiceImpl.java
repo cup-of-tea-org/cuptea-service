@@ -36,6 +36,8 @@ public class JoinServiceImpl implements JoinService {
     private final JavaMailSender javaMailSender;
     private final EmailCodeRedisRepository emailCodeRedisRepository;
 
+    private static final String DIR_NAME = "open";
+
 
     @Override
     @Transactional
@@ -47,7 +49,7 @@ public class JoinServiceImpl implements JoinService {
         }
 
         // s3 저장
-        final String uploadFilename = awsS3Service.upload(profileImage);
+        final String uploadFilename = awsS3Service.upload(profileImage, DIR_NAME);
 
         final UserEntity user = UserEntity.builder()
                 .loginId(joinUserDto.getLoginId())
