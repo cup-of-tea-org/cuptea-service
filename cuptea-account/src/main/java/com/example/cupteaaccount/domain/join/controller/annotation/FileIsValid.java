@@ -1,6 +1,6 @@
 package com.example.cupteaaccount.domain.join.controller.annotation;
 
-import com.example.cupteaaccount.domain.join.controller.FileValidator;
+import com.example.cupteaaccount.util.validator.FileValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

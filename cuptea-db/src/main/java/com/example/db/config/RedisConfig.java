@@ -1,4 +1,4 @@
-package com.example.cupteainfrastructure.config;
+package com.example.db.config;
 
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;

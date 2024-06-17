@@ -1,13 +1,12 @@
 package com.example.cupteaaccount.domain.login.model.oauth2;
 
-import com.example.cupteainfrastructure.user.enums.SocialType;
+import com.example.db.user.enums.SocialType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @NoArgsConstructor

@@ -1,4 +1,4 @@
-package com.example.cupteainfrastructure.user;
+package com.example.db.user;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.util.UUID;
 
-@RedisHash(value = "email-code", timeToLive = 60 * 3L)
+@RedisHash(value = "email-code", timeToLive = 60 * 5L)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +18,8 @@ public class EmailCodeEntity {
 
     @Id
     private UUID id;
-    private String code;
+
+    private String emailCode;
 
 
 }

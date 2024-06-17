@@ -2,10 +2,10 @@ package com.example.cupteaaccount.domain.login.service;
 
 import com.example.cupteaaccount.domain.login.model.oauth2.CustomOAuth2User;
 import com.example.cupteaaccount.domain.login.model.oauth2.OAuthAttributes;
-import com.example.cupteainfrastructure.user.UserEntity;
-import com.example.cupteainfrastructure.user.enums.SocialType;
-import com.example.cupteainfrastructure.user.enums.UserRole;
-import com.example.cupteainfrastructure.user.repository.UserRepository;
+import com.example.db.user.UserEntity;
+import com.example.db.user.enums.SocialType;
+import com.example.db.user.enums.UserRole;
+import com.example.db.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

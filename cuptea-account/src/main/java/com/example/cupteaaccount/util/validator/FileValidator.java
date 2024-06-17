@@ -1,4 +1,4 @@
-package com.example.cupteaaccount.domain.join.controller;
+package com.example.cupteaaccount.util.validator;
 
 import com.example.cupteaaccount.domain.join.controller.annotation.FileIsValid;
 import jakarta.validation.ConstraintValidator;

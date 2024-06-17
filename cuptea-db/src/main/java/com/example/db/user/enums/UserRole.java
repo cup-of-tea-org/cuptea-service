@@ -1,4 +1,4 @@
-package com.example.cupteainfrastructure.user.enums;
+package com.example.db.user.enums;
 
 public enum UserRole {
 

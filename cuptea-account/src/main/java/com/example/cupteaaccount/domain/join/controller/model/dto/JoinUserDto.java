@@ -1,13 +1,10 @@
 package com.example.cupteaaccount.domain.join.controller.model.dto;
 
-import com.example.cupteainfrastructure.user.enums.SocialType;
-import com.example.cupteainfrastructure.user.enums.UserRole;
-import jakarta.persistence.*;
+import com.example.db.user.enums.SocialType;
+import com.example.db.user.enums.UserRole;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -31,5 +28,4 @@ public class JoinUserDto {
 
     private UserRole role;
 
-    private String profileImgName;
 }

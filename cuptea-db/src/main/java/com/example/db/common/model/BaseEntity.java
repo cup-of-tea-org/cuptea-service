@@ -1,4 +1,4 @@
-package com.example.cupteainfrastructure.common.model;
+package com.example.db.common.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

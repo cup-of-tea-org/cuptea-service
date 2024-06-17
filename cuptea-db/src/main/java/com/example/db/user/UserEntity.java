@@ -1,8 +1,8 @@
-package com.example.cupteainfrastructure.user;
+package com.example.db.user;
 
-import com.example.cupteainfrastructure.common.model.BaseEntity;
-import com.example.cupteainfrastructure.user.enums.SocialType;
-import com.example.cupteainfrastructure.user.enums.UserRole;
+import com.example.db.common.model.BaseEntity;
+import com.example.db.user.enums.SocialType;
+import com.example.db.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

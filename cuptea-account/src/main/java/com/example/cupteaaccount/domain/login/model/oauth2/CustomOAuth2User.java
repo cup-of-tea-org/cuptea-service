@@ -1,6 +1,6 @@
 package com.example.cupteaaccount.domain.login.model.oauth2;
 
-import com.example.cupteainfrastructure.user.enums.UserRole;
+import com.example.db.user.enums.UserRole;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;

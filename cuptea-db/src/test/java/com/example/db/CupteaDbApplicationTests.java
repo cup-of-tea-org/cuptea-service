@@ -1,10 +1,10 @@
-package com.example.cupteainfrastructure;
+package com.example.db;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CupteaInfrastructureApplicationTests {
+class CupteaDbApplicationTests {
 
     @Test
     void contextLoads() {

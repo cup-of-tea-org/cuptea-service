@@ -1,6 +1,6 @@
-package com.example.cupteainfrastructure.user.repository;
+package com.example.db.user.repository;
 
-import com.example.cupteainfrastructure.user.EmailCodeEntity;
+import com.example.db.user.EmailCodeEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

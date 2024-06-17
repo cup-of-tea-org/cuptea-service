@@ -1,13 +1,11 @@
 package com.example.cupteaaccount.domain.join.controller;
 
 import com.example.cupteaaccount.domain.join.controller.annotation.FileIsValid;
+import com.example.cupteaaccount.domain.join.controller.model.dto.EmailCodeDto;
 import com.example.cupteaaccount.domain.join.controller.model.dto.EmailRequestDto;
 import com.example.cupteaaccount.domain.join.controller.model.dto.JoinIdOverlappedDto;
-import com.example.cupteaaccount.domain.join.controller.model.vo.FileRequest;
-import com.example.cupteaaccount.domain.join.controller.model.vo.JoinIdOverlappedRequest;
+import com.example.cupteaaccount.domain.join.controller.model.vo.*;
 import com.example.cupteaaccount.domain.join.controller.model.dto.JoinUserDto;
-import com.example.cupteaaccount.domain.join.controller.model.vo.JoinUserRequest;
-import com.example.cupteaaccount.domain.join.controller.model.vo.EmailRequest;
 import com.example.cupteaaccount.domain.join.service.JoinService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -43,7 +41,7 @@ public class JoinController {
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
         }
         // VO -> DTO
-        Boolean result = joinService.join(modelMapper.map(joinUserRequest, JoinUserDto.class));
+        Boolean result = joinService.join(modelMapper.map(joinUserRequest, JoinUserDto.class), profileImage);
 
         if(result) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -70,9 +68,12 @@ public class JoinController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 사용중인 아이디입니다.");
     }
 
-    @PostMapping("/email-check")
+    @PostMapping("/validate-email")
     @ApiResponse(description = "이메일 인증 API")
-    public ResponseEntity<?> emailAuthenticate(@RequestBody @Valid final EmailRequest emailRequest, Errors errors) {
+    public ResponseEntity<?> emailValidate(
+            @RequestBody @Valid final EmailRequest emailRequest,
+            Errors errors
+    ) {
         log.info("emailRequest = {}", emailRequest.getEmail());
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
@@ -85,6 +86,24 @@ public class JoinController {
     }
 
     // TODO 이메일 코드 검증 API 생성
+    @PostMapping("/validate-email-code-")
+    @ApiResponse(description = "이메일 코드 검증 API")
+    public ResponseEntity<?> emailCodeValidate(
+            @RequestBody @Valid final EmailCodeRequest emailCodeRequest,
+            Errors errors
+    ) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        final Boolean result = joinService.validateEmailCode(modelMapper.map(emailCodeRequest, EmailCodeDto.class));
+
+        if (result) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증번호가 일치하지 않습니다.");
+        }
+    }
 
 
 }

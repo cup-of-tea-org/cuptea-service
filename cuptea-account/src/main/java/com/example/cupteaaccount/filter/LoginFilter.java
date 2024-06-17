@@ -2,14 +2,13 @@ package com.example.cupteaaccount.filter;
 
 import com.example.cupteaaccount.domain.login.exception.UserNotFoundException;
 import com.example.cupteaaccount.domain.token.jwt.JwtHelper;
-import com.example.cupteainfrastructure.user.UserEntity;
-import com.example.cupteainfrastructure.user.repository.JoinUserRepository;
+import com.example.db.user.UserEntity;
+import com.example.db.user.repository.JoinUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
