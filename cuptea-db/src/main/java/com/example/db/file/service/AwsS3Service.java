@@ -26,7 +26,7 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile, String dir) {
+    public String upload(final MultipartFile multipartFile, final String dir) {
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new FileUploadFailException("파일 변환에 실패했습니다."));
         return upload(uploadFile, dir);

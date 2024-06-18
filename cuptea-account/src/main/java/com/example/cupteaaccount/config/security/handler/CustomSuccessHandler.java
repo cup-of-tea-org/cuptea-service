@@ -1,8 +1,12 @@
-package com.example.cupteaaccount.config.handler;
+package com.example.cupteaaccount.config.security.handler;
 
+import com.example.cupteaaccount.domain.login.exception.UserNotFoundException;
 import com.example.cupteaaccount.domain.login.model.oauth2.CustomOAuth2User;
 import com.example.cupteaaccount.domain.token.controller.model.TokenDto;
 import com.example.cupteaaccount.domain.token.jwt.JwtHelper;
+import com.example.db.user.UserEntity;
+import com.example.db.user.enums.UserRole;
+import com.example.db.user.repository.JoinUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +18,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -22,6 +27,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private final JwtHelper jwtHelper;
     private final ObjectMapper objectMapper;
+    private final JoinUserRepository joinUserRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -34,7 +40,10 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String nickname = customOAuth2User.getNickname();
 
         var auth = authentication.getAuthorities();
-        String role = auth.iterator().next().getAuthority();
+        UserRole role = UserRole.valueOf(auth.iterator().next().getAuthority());
+
+        log.info("userRole = {}", role);
+
 
         String token = jwtHelper.createToken(
                 customOAuth2User.getUserId(),
@@ -47,13 +56,20 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         TokenDto accessToken = TokenDto.builder()
                 .token(token)
                 .build();
-        //TODO Redis 에 저장
         String refreshToken = jwtHelper.createToken(
                 customOAuth2User.getUserId(),
                 nickname,
                 role,
-                86400000L // 하루
+                86400000L // 하루 24시간
         );
+
+        // loginId로 회원 정보 조회
+        UserEntity findUser = Objects.requireNonNull(joinUserRepository.findByLoginId(customOAuth2User.getNickname()), () -> {
+            throw new UserNotFoundException("회원 정보를 찾을 수 없습니다.");
+        });
+
+        // refresh token 저장
+        findUser.setRefreshToken(refreshToken);
 
         try {
             response.getWriter().write(objectMapper.writeValueAsString(accessToken));

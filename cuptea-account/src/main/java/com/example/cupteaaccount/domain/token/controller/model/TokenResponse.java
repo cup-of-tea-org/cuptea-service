@@ -2,15 +2,14 @@ package com.example.cupteaaccount.domain.token.controller.model;
 
 import lombok.*;
 
-import java.util.UUID;
-
 @Getter
 @Setter
-@ToString
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode
-public class TokenValidationResponse {
+public class TokenResponse {
 
-    private UUID userId;
+    private String token;
 }

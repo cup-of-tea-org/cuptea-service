@@ -1,10 +1,12 @@
 package com.example.cupteaaccount.config;
 
-import com.example.cupteaaccount.config.handler.CustomFailHandler;
-import com.example.cupteaaccount.config.handler.CustomSuccessHandler;
+import com.example.cupteaaccount.config.security.handler.CustomFailHandler;
+import com.example.cupteaaccount.config.security.handler.CustomSuccessHandler;
 import com.example.cupteaaccount.domain.login.service.CustomOAuth2UserService;
 import com.example.cupteaaccount.domain.token.jwt.JwtHelper;
+import com.example.cupteaaccount.filter.LoginFilter;
 import com.example.db.user.repository.JoinUserRepository;
+import com.example.db.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
@@ -35,6 +38,7 @@ public class SecurityConfig {
     private final JwtHelper jwtHelper;
     private final JoinUserRepository joinUserRepository;
     private final ObjectMapper objectMapper;
+    private final UserRepository userRepository;
 
 
 
@@ -82,15 +86,6 @@ public class SecurityConfig {
                                 .successHandler(customSuccessHandler)
                                 .failureHandler(customFailHandler)
                 );
-//        http
-//                .addFilterAt(new LoginFilter(
-//                                authenticationManager(authenticationConfiguration),
-//                                jwtHelper,
-//                                passwordEncoder(),
-//                                joinUserRepository,
-//                                objectMapper
-//                        ), UsernamePasswordAuthenticationFilter.class
-//                );
 
         http
                 .cors((cors) -> {
@@ -116,6 +111,17 @@ public class SecurityConfig {
                     config.setExposedHeaders(Collections.singletonList("Authorization"));
 
                 });
+
+        http
+                .addFilterAt(new LoginFilter(
+                                authenticationManager(authenticationConfiguration),
+                                jwtHelper,
+                                passwordEncoder(),
+                                joinUserRepository,
+                                objectMapper
+
+                        ), UsernamePasswordAuthenticationFilter.class
+                );
         return http.build();
     }
 

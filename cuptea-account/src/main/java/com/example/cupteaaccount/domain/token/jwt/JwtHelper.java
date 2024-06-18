@@ -1,6 +1,7 @@
 package com.example.cupteaaccount.domain.token.jwt;
 
-import com.example.cupteaaccount.domain.token.controller.model.TokenDto;
+import com.example.db.user.enums.UserRole;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +41,7 @@ public class JwtHelper {
     }
 
     // getNickname
-    public String getNickname(String token) {
+    public String getLoginId(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
@@ -71,7 +72,7 @@ public class JwtHelper {
     }
 
     // jwt 생성
-    public String createToken(UUID id, String nickname, String role, Long expiredMs) {
+    public String createToken(UUID id, String nickname, UserRole role, Long expiredMs) {
         String token = Jwts.builder()
                 .claim("id", id)
                 .claim("nickname", nickname)

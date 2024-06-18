@@ -53,7 +53,7 @@ public class ServiceApiPrivateFilter extends AbstractGatewayFilterFactory<Servic
             var accountApuUrl = UriComponentsBuilder
                     .fromUriString("http://localhost")
                     .port(8081)
-                    .path("/token/validation")
+                    .path("/api/token/validation")
                     .build()
                     .encode()
                     .toUriString();

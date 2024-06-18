@@ -1,4 +1,4 @@
-package com.example.cupteaaccount.config.handler;
+package com.example.cupteaaccount.config.security.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

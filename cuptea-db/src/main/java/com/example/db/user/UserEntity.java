@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -24,13 +25,14 @@ public class UserEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "login_id")
+    @Column(name = "login_id" , nullable = false)
     private String loginId;
 
     // 패스워드
-    @Column(name = "hash_pw")
+    @Column(name = "hash_pw", nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String phone;
 
     @Column(nullable = false)
@@ -39,7 +41,7 @@ public class UserEntity extends BaseEntity {
     private LocalDateTime birthday;
 
     // 소셜로그인
-    @Column(name = "social_type")
+    @Column(name = "social_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
@@ -49,6 +51,9 @@ public class UserEntity extends BaseEntity {
 
     @Column(name = "profile_img_name")
     private String profileImgName;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
 }
 

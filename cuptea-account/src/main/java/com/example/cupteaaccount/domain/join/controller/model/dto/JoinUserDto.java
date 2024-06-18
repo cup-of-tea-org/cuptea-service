@@ -23,9 +23,4 @@ public class JoinUserDto {
     private String email;
 
     private LocalDateTime birthday;
-
-    private SocialType socialType;
-
-    private UserRole role;
-
 }

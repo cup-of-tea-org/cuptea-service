@@ -9,6 +9,7 @@ import com.example.cupteaaccount.domain.join.controller.model.dto.JoinUserDto;
 import com.example.db.file.service.AwsS3Service;
 import com.example.db.user.EmailCodeEntity;
 import com.example.db.user.UserEntity;
+import com.example.db.user.enums.SocialType;
 import com.example.db.user.enums.UserRole;
 import com.example.db.user.repository.EmailCodeRedisRepository;
 import com.example.db.user.repository.JoinUserRepository;
@@ -49,6 +50,7 @@ public class JoinServiceImpl implements JoinService {
         }
 
         // s3 저장
+        // storage name : open/ [파일이름]
         final String uploadFilename = awsS3Service.upload(profileImage, DIR_NAME);
 
         final UserEntity user = UserEntity.builder()
@@ -58,7 +60,7 @@ public class JoinServiceImpl implements JoinService {
                 .email(joinUserDto.getEmail())
                 .birthday(joinUserDto.getBirthday())
                 .profileImgName(uploadFilename)
-                .socialType(joinUserDto.getSocialType())
+                .socialType(SocialType.NONE)
                 .role(UserRole.USER)
                 .build();
 
@@ -132,11 +134,7 @@ public class JoinServiceImpl implements JoinService {
         EmailCodeEntity emailCodeEntity = emailCodeRedisRepository.findById(emailCodeDto.getEmailCode())
                 .orElseThrow(() -> new MailSendFailException("인증 코드가 존재하지 않습니다."));
 
-        if (emailCodeEntity != null) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.cupteaaccount.domain.token.controller.privateapi;
+package com.example.cupteaaccount.domain.token.controller;
 
 import com.example.cupteaaccount.domain.token.controller.model.TokenValidationResponse;
 import com.example.cupteaaccount.domain.token.service.TokenService;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/token")
 @RequiredArgsConstructor
 @Slf4j
 public class TokenController {
@@ -21,7 +20,7 @@ public class TokenController {
     private final ModelMapper modelMapper;
     private final TokenService tokenService;
 
-    @PostMapping("/validation")
+    @PostMapping("/api/token/validation")
     public TokenValidationResponse tokenValidation(@RequestBody final TokenValidationRequest request ) {
         log.info("token validation 시작 : {}", request );
 
@@ -31,4 +30,6 @@ public class TokenController {
                 tokenService.validateToken(tokenDto), TokenValidationResponse.class
         );
     }
+
+
 }

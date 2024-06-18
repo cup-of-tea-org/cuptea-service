@@ -40,7 +40,4 @@ public class JoinUserRequest {
 
     @Past(message = "생일은 오늘 이전 날짜로 입력해주세요")
     private LocalDateTime birthday;
-
-    @NotBlank(message = "소셜 타입이 맞지 않습니다")
-    private String socialType;
 }
