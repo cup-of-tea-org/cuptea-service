@@ -4,6 +4,7 @@ import com.example.cupteacloud.dto.TokenDto;
 import com.example.cupteacloud.dto.TokenValidationRequest;
 import com.example.cupteacloud.dto.TokenValidationResponse;
 import com.example.cupteacloud.exception.TokenNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -91,19 +92,10 @@ public class ServiceApiPrivateFilter extends AbstractGatewayFilterFactory<Servic
                     })
                     .flatMap((res) -> {
                                 // 응답
-                                log.info("token response : {}", res);
 
-                                // 사용자 정보 추가
+                                log.info("token validation response : {}", res);
 
-                                var userId = res.getUserId().toString();
-
-                                var proxyHeaderSet = exchange.getRequest().mutate()
-                                        .header("user-id", userId)
-                                        .build();
-                                // proxy header 를 원래 요청에 build
-                                var proxyDoneRequest = exchange.mutate().request(proxyHeaderSet).build();
-
-                                return chain.filter(proxyDoneRequest);
+                                return chain.filter(exchange);
                             }
                     )
                     .onErrorMap((e) -> {
