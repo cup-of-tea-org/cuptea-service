@@ -78,6 +78,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             .profileImgName(findUser.getProfileImgName())
             .role(findUser.getRole())
             .socialType(findUser.getSocialType())
+                .interest(findUser.getInterest())
             .build();
 
     CustomUserDetails customUserDetails = new CustomUserDetails(user);

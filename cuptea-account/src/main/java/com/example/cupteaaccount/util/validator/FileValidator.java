@@ -23,7 +23,6 @@ public class FileValidator implements ConstraintValidator<FileIsValid, Multipart
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext constraintValidatorContext) {
         log.info("Validating~~~~~)");
-        log.info(multipartFile.getContentType());
 
         if (multipartFile.isEmpty()) {
             constraintValidatorContext.buildConstraintViolationWithTemplate("파일이 비어있습니다.").addConstraintViolation();
@@ -35,10 +34,10 @@ public class FileValidator implements ConstraintValidator<FileIsValid, Multipart
             return false;
         }
 
-        if (!FILE_TYPE.equals(multipartFile.getContentType())) {
-            constraintValidatorContext.buildConstraintViolationWithTemplate("파일 형식이 맞지 않습니다.").addConstraintViolation();
-            return false;
-        }
+//        if (!FILE_TYPE.equals(multipartFile.getContentType())) {
+//            constraintValidatorContext.buildConstraintViolationWithTemplate("파일 형식이 맞지 않습니다.").addConstraintViolation();
+//            return false;
+//        }
 
         return true;
     }

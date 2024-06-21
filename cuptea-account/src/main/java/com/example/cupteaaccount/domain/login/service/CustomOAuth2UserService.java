@@ -3,6 +3,7 @@ package com.example.cupteaaccount.domain.login.service;
 import com.example.cupteaaccount.domain.login.model.oauth2.CustomOAuth2User;
 import com.example.cupteaaccount.domain.login.model.oauth2.OAuthAttributes;
 import com.example.db.user.UserEntity;
+import com.example.db.user.enums.Interest;
 import com.example.db.user.enums.SocialType;
 import com.example.db.user.enums.UserRole;
 import com.example.db.user.repository.UserRepository;
@@ -92,6 +93,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .birthday(null)
                 .socialType(socialType)
                 .role(UserRole.USER)
+                .interest(Interest.NONE)
                 .profileImgName(oAuthAttributes.getOAuth2Response().getProfileUrl())
                 .build();
 

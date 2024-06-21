@@ -13,5 +13,5 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class EmailCodeDto {
 
-    private UUID emailCode;
+    private String emailCode;
 }

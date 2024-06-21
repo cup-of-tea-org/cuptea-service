@@ -15,5 +15,5 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class EmailCodeRequest {
 
-    private UUID emailCode;
+    private String emailCode;
 }

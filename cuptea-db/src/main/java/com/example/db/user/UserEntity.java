@@ -1,13 +1,13 @@
 package com.example.db.user;
 
 import com.example.db.common.model.BaseEntity;
+import com.example.db.user.enums.Interest;
 import com.example.db.user.enums.SocialType;
 import com.example.db.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -29,16 +29,16 @@ public class UserEntity extends BaseEntity {
     private String loginId;
 
     // 패스워드
-    @Column(name = "hash_pw", nullable = false)
+    @Column(name = "hash_pw")
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private String phone;
 
-    @Column(nullable = false)
+    @Column
     private String email;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
     // 소셜로그인
     @Column(name = "social_type", nullable = false)
@@ -49,11 +49,18 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Interest interest;
+
     @Column(name = "profile_img_name")
     private String profileImgName;
 
     @Column(name = "refresh_token")
     private String refreshToken;
+
+    @Column(name = "provision")
+    private Boolean provision;
 
 }
 

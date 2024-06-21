@@ -28,20 +28,22 @@ public class JoinController {
     private final JoinService joinService;
     private final ModelMapper modelMapper;
 
-    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiResponse(description = "회원가입 API")
     public ResponseEntity<?> join(
+            @RequestPart(required = false, value = "file") @Valid @FileIsValid MultipartFile file,
             @RequestPart @Valid final JoinUserRequest joinUserRequest,
-            @RequestPart(required = false, value = "profileImage") @Valid @FileIsValid final MultipartFile profileImage,
             Errors errors
     ) {
-        log.info("multipartFile = {}", profileImage.getOriginalFilename());
+        log.info("joinUserRequest = {}", joinUserRequest.toString());
+        log.info("multipartFile = {}", file.getContentType());
         // validation
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
         }
+
         // VO -> DTO
-        Boolean result = joinService.join(modelMapper.map(joinUserRequest, JoinUserDto.class), profileImage);
+        Boolean result = joinService.join(modelMapper.map(joinUserRequest, JoinUserDto.class), file);
 
         if(result) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -51,18 +53,19 @@ public class JoinController {
     }
 
 
-    @PostMapping("/id-check")
+    @PostMapping(value = "/id-check", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponse(description = "아이디 중복 체크 API")
     public ResponseEntity<?> idOverlapped(
-            @RequestBody @Valid final JoinIdOverlappedRequest request,
+            @RequestBody @Valid final JoinIdOverlappedRequest joinIdOverlappedRequest,
             Errors errors
     ) {
+        log.info("joinIdOverlappedRequest = {}", joinIdOverlappedRequest.getLoginId());
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
         }
 
         // VO -> DTO
-        Boolean result = joinService.isIdOverlapped(modelMapper.map(request, JoinIdOverlappedDto.class));
+        Boolean result = joinService.isIdOverlapped(modelMapper.map(joinIdOverlappedRequest, JoinIdOverlappedDto.class));
 
         return result ? ResponseEntity.ok().build()
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 사용중인 아이디입니다.");
@@ -74,7 +77,6 @@ public class JoinController {
             @RequestBody @Valid final EmailRequest emailRequest,
             Errors errors
     ) {
-        log.info("emailRequest = {}", emailRequest.getEmail());
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
         }

@@ -1,10 +1,14 @@
 package com.example.cupteaaccount.domain.join.controller.model.vo;
 
+import com.example.cupteaaccount.domain.join.controller.annotation.ProvisionIsValid;
+import com.example.db.user.enums.Interest;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,7 +19,7 @@ import java.time.LocalDateTime;
 public class JoinUserRequest {
 
     @NotBlank(message = "아이디 형식이 맞지 않습니다")
-    @Length(min = 4, max = 20, message = "아이디는 4자 이상 20자 이하로 입력해주세요")
+    @Pattern(regexp = "^[a-zA-Z]{4,20}$", message = "아이디는 영문자로 4자 이상 20자 이하로 입력해주세요")
     private String loginId;
 
     @NotBlank(message = "password 형식이 맞지 않습니다.")
@@ -38,6 +42,12 @@ public class JoinUserRequest {
     @Email(message = "이메일 형식이 맞지 않습니다.")
     private String email;
 
+    @NotBlank(message = "관심사 형식이 맞지 않습니다.")
+    private String interest;
+
+    @ProvisionIsValid
+    private Boolean provision;
+
     @Past(message = "생일은 오늘 이전 날짜로 입력해주세요")
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 }

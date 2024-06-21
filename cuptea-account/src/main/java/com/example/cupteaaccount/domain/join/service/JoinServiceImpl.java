@@ -9,6 +9,7 @@ import com.example.cupteaaccount.domain.join.controller.model.dto.JoinUserDto;
 import com.example.db.file.service.AwsS3Service;
 import com.example.db.user.EmailCodeEntity;
 import com.example.db.user.UserEntity;
+import com.example.db.user.enums.Interest;
 import com.example.db.user.enums.SocialType;
 import com.example.db.user.enums.UserRole;
 import com.example.db.user.repository.EmailCodeRedisRepository;
@@ -44,6 +45,8 @@ public class JoinServiceImpl implements JoinService {
     @Transactional
     public Boolean join(final JoinUserDto joinUserDto, final MultipartFile profileImage) {
 
+        
+
         // 기존 회원인지 검증
         if (joinUserRepository.findByLoginId(joinUserDto.getLoginId()) != null) {
             throw new UserJoinFailException("이미 가입된 회원입니다.");
@@ -53,6 +56,8 @@ public class JoinServiceImpl implements JoinService {
         // storage name : open/ [파일이름]
         final String uploadFilename = awsS3Service.upload(profileImage, DIR_NAME);
 
+        Interest convertInterest = convertInterest(joinUserDto.getInterest());
+
         final UserEntity user = UserEntity.builder()
                 .loginId(joinUserDto.getLoginId())
                 .password(passwordEncoder.encode(joinUserDto.getPassword()))
@@ -61,9 +66,9 @@ public class JoinServiceImpl implements JoinService {
                 .birthday(joinUserDto.getBirthday())
                 .profileImgName(uploadFilename)
                 .socialType(SocialType.NONE)
+                .interest(convertInterest)
                 .role(UserRole.USER)
                 .build();
-
 
         // MySQL 저장
         joinUserRepository.save(user);
@@ -71,8 +76,11 @@ public class JoinServiceImpl implements JoinService {
         return true;
     }
 
+
+
     @Override
     public Boolean isIdOverlapped(final JoinIdOverlappedDto joinIdOverlappedDto) {
+        log.info("joinIdOverlappedDto = {}", joinIdOverlappedDto.getLoginId());
         UserEntity findUser = joinUserRepository.findByLoginId(joinIdOverlappedDto.getLoginId());
         if (findUser == null) {
             return true; // id 중복 x
@@ -131,10 +139,18 @@ public class JoinServiceImpl implements JoinService {
     @Override
     @Transactional
     public Boolean validateEmailCode(final EmailCodeDto emailCodeDto) {
-        EmailCodeEntity emailCodeEntity = emailCodeRedisRepository.findById(emailCodeDto.getEmailCode())
+        EmailCodeEntity emailCodeEntity = emailCodeRedisRepository
+                .findById(UUID.fromString(emailCodeDto.getEmailCode()))
                 .orElseThrow(() -> new MailSendFailException("인증 코드가 존재하지 않습니다."));
 
+        log.info("이메일 코드 인증 성공!!");
         return true;
+    }
+
+    // interest enum 변환
+    private Interest convertInterest(String interest) {
+
+        return Interest.valueOf(interest.toUpperCase());
     }
 
 

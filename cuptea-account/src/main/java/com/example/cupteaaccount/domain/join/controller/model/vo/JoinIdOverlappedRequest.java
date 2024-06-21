@@ -5,10 +5,11 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-@ToString
-@EqualsAndHashCode
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@ToString
 public class JoinIdOverlappedRequest {
 
     @NotBlank(message = "아이디 형식이 맞지 않습니다")
