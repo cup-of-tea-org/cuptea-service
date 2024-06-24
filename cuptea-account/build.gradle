@@ -22,10 +22,12 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
-
-
 }
 
-bootJar.enabled = true
-jar.enabled = false
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false
+}

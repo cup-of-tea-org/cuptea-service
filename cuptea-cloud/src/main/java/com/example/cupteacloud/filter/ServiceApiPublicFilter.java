@@ -26,8 +26,6 @@ public class ServiceApiPublicFilter extends AbstractGatewayFilterFactory<Service
         return (exchange, chain) -> {
             var uri = exchange.getRequest().getURI();
 
-
-
             log.info("[ServiceApiPublicFilter] request headers = {}", exchange.getRequest().getHeaders());
             log.info("[ServiceApiPublicFilter] response statusCode = {}", exchange.getResponse().getStatusCode());
 

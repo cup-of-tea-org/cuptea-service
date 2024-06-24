@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.core.ParameterizedTypeReference;
 
 @Getter
-@EqualsAndHashCode
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor

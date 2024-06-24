@@ -4,16 +4,20 @@ import com.example.cupteaaccount.config.security.user.CustomUserDetails;
 import com.example.cupteaaccount.domain.login.exception.UserNotFoundException;
 import com.example.cupteaaccount.domain.token.controller.model.TokenResponse;
 import com.example.cupteaaccount.domain.token.jwt.JwtHelper;
+import com.example.cupteaaccount.filter.model.FilterErrorResponse;
+import com.example.cupteaaccount.filter.model.LoginFilterRequest;
 import com.example.db.user.UserEntity;
 import com.example.db.user.enums.UserRole;
 import com.example.db.user.repository.JoinUserRepository;
 import com.example.db.user.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +30,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -52,21 +57,41 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         this.objectMapper = objectMapper;
         setFilterProcessesUrl("/open-api/login"); // 필터 경로 설정
         setPostOnly(true);
-
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = obtainUsername(request);
-        String rawPassword = obtainPassword(request);
 
-        final UserEntity findUser = Objects.requireNonNull(joinUserRepository.findByLoginId(username), () -> {
-            throw new UserNotFoundException("유저 찾기 실패");
-        });
+        String username = null;
+        String rawPassword = null;
+        try {
+            LoginFilterRequest loginFilterRequest = objectMapper.readValue(
+                    request.getReader().lines().collect(Collectors.joining()), LoginFilterRequest.class);
 
-        // 비밀번호 검증
-        if (!passwordEncoder.matches(rawPassword, findUser.getPassword())) {
-            throw new UserNotFoundException("비밀번호 불일치");
+            log.info("loginId = {}", loginFilterRequest.getLoginId());
+            log.info("pw = {}", loginFilterRequest.getPassword());
+
+            username = loginFilterRequest.getLoginId();
+            rawPassword = loginFilterRequest.getPassword();
+
+        } catch (IOException e) {
+            log.error("", e);
+        }
+
+        UserEntity findUser = joinUserRepository.findByLoginId(username);
+
+        if (findUser == null || (!passwordEncoder.matches(rawPassword, findUser.getPassword()))) {
+            try {
+                response.setStatus(400);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(
+                        objectMapper.writeValueAsString(
+                                new FilterErrorResponse("아이디 또는 비밀번호가 맞지 않습니다.")));
+                return null;
+            } catch (IOException e) {
+                log.error("", e.getMessage());
+            }
         }
 
         UserEntity user = UserEntity.builder()

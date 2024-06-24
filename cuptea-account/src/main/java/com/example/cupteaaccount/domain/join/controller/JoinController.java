@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/open-api/join")
+@RequestMapping("/open-api/user")
 @Slf4j
 public class JoinController {
 
@@ -53,7 +53,7 @@ public class JoinController {
     }
 
 
-    @PostMapping(value = "/id-check", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/validate-id", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponse(description = "아이디 중복 체크 API")
     public ResponseEntity<?> idOverlapped(
             @RequestBody @Valid final JoinIdOverlappedRequest joinIdOverlappedRequest,

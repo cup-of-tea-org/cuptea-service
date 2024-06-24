@@ -22,6 +22,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,12 +41,10 @@ public class JoinServiceImpl implements JoinService {
 
     private static final String DIR_NAME = "open";
 
-
     @Override
     @Transactional
     public Boolean join(final JoinUserDto joinUserDto, final MultipartFile profileImage) {
 
-        
 
         // 기존 회원인지 검증
         if (joinUserRepository.findByLoginId(joinUserDto.getLoginId()) != null) {
@@ -79,6 +78,7 @@ public class JoinServiceImpl implements JoinService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Boolean isIdOverlapped(final JoinIdOverlappedDto joinIdOverlappedDto) {
         log.info("joinIdOverlappedDto = {}", joinIdOverlappedDto.getLoginId());
         UserEntity findUser = joinUserRepository.findByLoginId(joinIdOverlappedDto.getLoginId());
@@ -91,9 +91,16 @@ public class JoinServiceImpl implements JoinService {
 
     // 이메일 생성
     @Override
-    @Transactional
+    @Transactional(rollbackFor = MessagingException.class)
     public void sendEmail(final EmailRequestDto emailRequestDto) {
         log.info("emailRequestDto = {}", emailRequestDto.getEmail());
+
+        UserEntity findUser = joinUserRepository.findByEmail(emailRequestDto.getEmail());
+
+        if (findUser != null) {
+            throw new UserJoinFailException("이미 가입된 이메일입니다.");
+        }
+
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         // 제목, 내용 생성
@@ -107,7 +114,7 @@ public class JoinServiceImpl implements JoinService {
         StringBuffer text = new StringBuffer();
         text
                 .append("인증번호는 : ")
-                .append(randomId)
+                .append(randomId + "\n")
                 .append("사이트에 돌아가셔서 인증해주세요\n")
                 .append("주의 ! : 5분 이내에 입력해주셔야 합니다!\n");
 
@@ -137,7 +144,7 @@ public class JoinServiceImpl implements JoinService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Boolean validateEmailCode(final EmailCodeDto emailCodeDto) {
         EmailCodeEntity emailCodeEntity = emailCodeRedisRepository
                 .findById(UUID.fromString(emailCodeDto.getEmailCode()))

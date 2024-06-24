@@ -35,3 +35,6 @@ sourceSets {
 clean {
     delete file(generated)
 }
+
+bootJar.enabled = false
+jar.enabled = true

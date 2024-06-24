@@ -1,0 +1,48 @@
+server:
+  port: 9090
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: public-service-api # ??
+          uri: http://${EC2_HOST}:8080  # api ?? ??
+          predicates:
+            - Path=/service-api/open-api/**
+          filters:
+            - RewritePath=/service-api(?<segment>/?.*), $\{segment}
+            - ServiceApiPublicFilter
+
+        - id: oauth2-api # ??
+          uri: http://${EC2_HOST}:8080  # api ?? ??
+          predicates:
+            - Path=/service-api/oauth2/**
+          filters:
+            - RewritePath=/service-api(?<segment>/?.*), $\{segment}
+            - OAuth2Filter
+          
+        - id: oauth2-redirect-api # ??
+          uri: http://${EC2_HOST}:8080  # api ?? ??
+          predicates:
+            - Path=/service-api/login/**
+          filters:
+            - RewritePath=/service-api(?<segment>/?.*), $\{segment}
+            - OAuth2RedirectFilter
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - 'http://${EC2_HOST}:3000'
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+            maxAge: 3600
+

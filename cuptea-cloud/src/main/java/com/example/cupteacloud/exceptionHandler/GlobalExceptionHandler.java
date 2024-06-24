@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -31,6 +32,7 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
         // response header에 content type 설정
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
+
         // ErrorResponse 생성
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
 
@@ -39,13 +41,16 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 
         byte[] errorResponseToByteArr;
         try {
-            errorResponseToByteArr = objectMapper.writeValueAsBytes(ex.getLocalizedMessage());
+            errorResponseToByteArr = objectMapper.writeValueAsBytes(ex.getMessage());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
 
         var dataBuffer = response.bufferFactory();
+
+        // 500 에러
+        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
 
         return response.writeWith(
                 Mono.fromSupplier(

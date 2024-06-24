@@ -89,8 +89,10 @@ public class SecurityConfig {
                                         .userService(customOAuth2UserService)))
                                 .successHandler(customSuccessHandler)
                                 .failureHandler(customFailHandler)
+
                 );
 
+        // cors 설정 local
         http
 
                 .cors((cors) -> {
@@ -105,6 +107,22 @@ public class SecurityConfig {
                         return config;
                     });
                 });
+        // cors 설정 dev
+//        http
+//
+//                .cors((cors) -> {
+//                    cors.configurationSource(request -> {
+//                        // cors 설정
+//                        CorsConfiguration config = new CorsConfiguration();
+//                        config.setAllowedOrigins(Collections
+//                        .singletonList("http://52.79.137.212:3000"));
+//                        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//                        config.setAllowCredentials(true);
+//                        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+//                        config.setMaxAge(3600L);
+//                        return config;
+//                    });
+//                });
 
         http
                 .addFilterAt(new LoginFilter(
@@ -125,20 +143,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
-//        configuration.setAllowCredentials(true);
-//        configuration.addExposedHeader("*");
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
-
-
-
 }
