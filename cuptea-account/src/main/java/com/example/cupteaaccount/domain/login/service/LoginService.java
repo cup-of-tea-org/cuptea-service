@@ -4,6 +4,7 @@ import com.example.cupteaaccount.common.model.Mail;
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindIdRequestDto;
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindIdResponseDto;
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindPasswordRequestDto;
+import com.example.cupteaaccount.domain.login.controller.model.dto.UpdatePasswordRequestDto;
 import com.example.cupteaaccount.domain.login.exception.UserNotFoundException;
 import com.example.cupteaaccount.util.MailHelper;
 import com.example.db.user.EmailCodeEntity;
@@ -12,6 +13,7 @@ import com.example.db.user.repository.EmailCodeRedisRepository;
 import com.example.db.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ public class LoginService {
     private final UserRepository userRepository;
     private final MailHelper mailHelper;
     private final EmailCodeRedisRepository emailCodeRedisRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public FindIdResponseDto findUserByEmail(final FindIdRequestDto findIdRequestDto) {
@@ -77,5 +80,22 @@ public class LoginService {
         emailCodeRedisRepository
                 .findById(UUID.fromString(emailCode))
                 .orElseThrow(() -> new UserNotFoundException("인증 코드가 존재하지 않습니다."));
+    }
+
+    @Transactional
+    public void updatePassword(final UpdatePasswordRequestDto updatePasswordRequestDto) {
+
+        UserEntity findUser = userRepository.findByLoginId(updatePasswordRequestDto.getLoginId());
+
+        if (findUser == null) {
+            throw new UserNotFoundException("유저를 찾을 수 없습니다.");
+        }
+
+        if (!passwordEncoder.matches(updatePasswordRequestDto.getPassword(), findUser.getPassword())) {
+            throw new UserNotFoundException("비밀번호가 일치하지 않습니다.");
+        }
+
+        // 비밀번호 변경
+        findUser.setPassword(passwordEncoder.encode(updatePasswordRequestDto.getPassword()));
     }
 }

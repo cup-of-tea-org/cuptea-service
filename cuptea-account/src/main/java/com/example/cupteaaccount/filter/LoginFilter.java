@@ -124,9 +124,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         // 유저 정보
         String username = authResult.getName();
         String password = obtainPassword(request);
-        log.info("password = {}", password);
-
-        log.info("username = {}", username);
 
         final UserEntity findUser = Objects.requireNonNull(joinUserRepository.findByLoginId(username), () -> {
             throw new UserNotFoundException("유저 찾기 실패");

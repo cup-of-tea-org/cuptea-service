@@ -4,9 +4,11 @@ package com.example.cupteaaccount.domain.login.controller;
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindIdRequestDto;
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindIdResponseDto;
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindPasswordRequestDto;
+import com.example.cupteaaccount.domain.login.controller.model.dto.UpdatePasswordRequestDto;
 import com.example.cupteaaccount.domain.login.controller.model.vo.FindIdRequest;
 import com.example.cupteaaccount.domain.login.controller.model.vo.FindIdResponse;
 import com.example.cupteaaccount.domain.login.controller.model.vo.FindPasswordRequest;
+import com.example.cupteaaccount.domain.login.controller.model.vo.UpdatePasswordRequest;
 import com.example.cupteaaccount.domain.login.service.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +63,21 @@ public class LoginController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/password")
+    public ResponseEntity<?> updatePassword(
+            @RequestBody @Valid final UpdatePasswordRequest request,
+            Errors errors
+    ) {
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        loginService.updatePassword(modelMapper.map(request, UpdatePasswordRequestDto.class));
+
+        return ResponseEntity.ok().build();
+    }
+
+
     @GetMapping("/password/{emailCode}")
     public ResponseEntity<?> validatePasswordCode(
             @PathVariable("emailCode") String emailCode
@@ -72,7 +89,5 @@ public class LoginController {
         loginService.validateEmailCode(emailCode);
         return ResponseEntity.ok().build();
     }
-
-    //TODO PUTMAPPING 비밀번호 수정 API
 
 }

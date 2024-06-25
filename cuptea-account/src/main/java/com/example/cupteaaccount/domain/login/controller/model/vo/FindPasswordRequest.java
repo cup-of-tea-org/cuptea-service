@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
 public class FindPasswordRequest {
     @NotBlank(message = "아이디를 입력해주세요.")
     private String loginId;
