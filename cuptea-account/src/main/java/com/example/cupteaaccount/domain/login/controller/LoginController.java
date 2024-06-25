@@ -3,16 +3,17 @@ package com.example.cupteaaccount.domain.login.controller;
 
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindIdRequestDto;
 import com.example.cupteaaccount.domain.login.controller.model.dto.FindIdResponseDto;
+import com.example.cupteaaccount.domain.login.controller.model.dto.FindPasswordRequestDto;
 import com.example.cupteaaccount.domain.login.controller.model.vo.FindIdRequest;
 import com.example.cupteaaccount.domain.login.controller.model.vo.FindIdResponse;
-import com.example.cupteaaccount.domain.login.controller.model.vo.LoginResponse;
+import com.example.cupteaaccount.domain.login.controller.model.vo.FindPasswordRequest;
 import com.example.cupteaaccount.domain.login.service.LoginService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,33 @@ public class LoginController {
                 .body(modelMapper.map(findIdResponseDto, FindIdResponse.class));
     }
 
-    //TODO 비밀번호 찾기 API 구현
+    @PostMapping("/password")
+    public ResponseEntity<?> findUserPassword(
+            @RequestBody @Valid final FindPasswordRequest request,
+            Errors errors
+    ) {
+        log.info("findUserPassword request ID : {}", request.getLoginId());
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        loginService.findPassword(modelMapper.map(request, FindPasswordRequestDto.class));
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/password/{emailCode}")
+    public ResponseEntity<?> validatePasswordCode(
+            @PathVariable("emailCode") String emailCode
+    ) {
+        log.info("validatePasswordCode emailCode : {}", emailCode);
+        if (!StringUtils.hasText(emailCode)) {
+            return ResponseEntity.badRequest().body("인증코드를 입력해주세요.");
+        }
+        loginService.validateEmailCode(emailCode);
+        return ResponseEntity.ok().build();
+    }
+
+    //TODO PUTMAPPING 비밀번호 수정 API
 
 }

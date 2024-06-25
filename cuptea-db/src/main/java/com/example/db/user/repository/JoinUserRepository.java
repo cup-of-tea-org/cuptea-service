@@ -13,4 +13,5 @@ public interface JoinUserRepository extends JpaRepository<UserEntity, UUID> {
     UserEntity findByEmail(String email);
 
 
+
 }

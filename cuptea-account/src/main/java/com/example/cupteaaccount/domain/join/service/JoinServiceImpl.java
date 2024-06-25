@@ -1,11 +1,13 @@
 package com.example.cupteaaccount.domain.join.service;
 
+import com.example.cupteaaccount.common.model.Mail;
 import com.example.cupteaaccount.domain.join.controller.model.dto.EmailCodeDto;
 import com.example.cupteaaccount.domain.join.controller.model.dto.EmailRequestDto;
 import com.example.cupteaaccount.domain.join.controller.model.dto.JoinIdOverlappedDto;
 import com.example.cupteaaccount.domain.join.exception.MailSendFailException;
 import com.example.cupteaaccount.domain.join.exception.UserJoinFailException;
 import com.example.cupteaaccount.domain.join.controller.model.dto.JoinUserDto;
+import com.example.cupteaaccount.util.MailHelper;
 import com.example.db.file.service.AwsS3Service;
 import com.example.db.user.EmailCodeEntity;
 import com.example.db.user.UserEntity;
@@ -38,6 +40,7 @@ public class JoinServiceImpl implements JoinService {
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
     private final EmailCodeRedisRepository emailCodeRedisRepository;
+    private final MailHelper mailHelper;
 
     private static final String DIR_NAME = "open";
 
@@ -55,8 +58,18 @@ public class JoinServiceImpl implements JoinService {
         // storage name : open/ [파일이름]
         final String uploadFilename = awsS3Service.upload(profileImage, DIR_NAME);
 
+        // 관심사 convert
         Interest convertInterest = convertInterest(joinUserDto.getInterest());
+        // create UserEntity
+        final UserEntity user = getUserEntity(joinUserDto, uploadFilename, convertInterest);
 
+        // MySQL 저장
+        joinUserRepository.save(user);
+
+        return true;
+    }
+
+    private UserEntity getUserEntity(JoinUserDto joinUserDto, String uploadFilename, Interest convertInterest) {
         final UserEntity user = UserEntity.builder()
                 .loginId(joinUserDto.getLoginId())
                 .password(passwordEncoder.encode(joinUserDto.getPassword()))
@@ -68,13 +81,8 @@ public class JoinServiceImpl implements JoinService {
                 .interest(convertInterest)
                 .role(UserRole.USER)
                 .build();
-
-        // MySQL 저장
-        joinUserRepository.save(user);
-
-        return true;
+        return user;
     }
-
 
 
     @Override
@@ -101,8 +109,6 @@ public class JoinServiceImpl implements JoinService {
             throw new UserJoinFailException("이미 가입된 이메일입니다.");
         }
 
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-
         // 제목, 내용 생성
         StringBuffer subject = new StringBuffer();
         subject
@@ -118,35 +124,25 @@ public class JoinServiceImpl implements JoinService {
                 .append("사이트에 돌아가셔서 인증해주세요\n")
                 .append("주의 ! : 5분 이내에 입력해주셔야 합니다!\n");
 
-        // 이메일 전송
-        try {
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false , "UTF-8");
-            mimeMessageHelper.setTo(emailRequestDto.getEmail());
-            mimeMessageHelper.setSubject(subject.toString());
-            mimeMessageHelper.setText(text.toString());
-            javaMailSender.send(mimeMessage);
-
-            //TODO 이메일 인증 코드 저장 redis 에
-
+        //  create mail && 이메일 전송
+            mailHelper.createEmail(
+                    Mail.builder()
+                            .setTo(emailRequestDto.getEmail())
+                            .subject(subject.toString())
+                            .text(text.toString())
+                            .build()
+            );
             log.info("이메일 전송 완료! [회원가입]");
-
-        } catch (MessagingException e) {
-            log.info("이메일 전송 실패! [회원가입]");
-            throw new MailSendFailException("메일 전송이 실패하였습니다.");
-        }
-
         // 레디스에 저장
         emailCodeRedisRepository.save(EmailCodeEntity.builder()
                 .id(randomId)
                 .build());
-
-
     }
 
     @Override
     @Transactional(readOnly = true)
     public Boolean validateEmailCode(final EmailCodeDto emailCodeDto) {
-        EmailCodeEntity emailCodeEntity = emailCodeRedisRepository
+        emailCodeRedisRepository
                 .findById(UUID.fromString(emailCodeDto.getEmailCode()))
                 .orElseThrow(() -> new MailSendFailException("인증 코드가 존재하지 않습니다."));
 
@@ -156,7 +152,6 @@ public class JoinServiceImpl implements JoinService {
 
     // interest enum 변환
     private Interest convertInterest(String interest) {
-
         return Interest.valueOf(interest.toUpperCase());
     }
 
