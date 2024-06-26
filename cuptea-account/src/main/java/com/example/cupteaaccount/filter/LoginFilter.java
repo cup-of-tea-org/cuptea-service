@@ -123,7 +123,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         // 유저 정보
         String username = authResult.getName();
-        String password = obtainPassword(request);
 
         final UserEntity findUser = Objects.requireNonNull(joinUserRepository.findByLoginId(username), () -> {
             throw new UserNotFoundException("유저 찾기 실패");
@@ -156,7 +155,21 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        response.setStatus(401);
+        try {
+            response.setStatus(401);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.getWriter().write(
+                    objectMapper.writeValueAsString(objectMapper.writeValueAsString(
+                            new FilterErrorResponse("아이디 또는 비밀번호가 맞지 않습니다.")
+                    ))
+            );
+
+        }catch (IOException e) {
+            response.setStatus(401);
+            log.error("", "JSON PARSE EXCEPTION");
+        }
+
+
         log.error("로그인 실패");
     }
 }

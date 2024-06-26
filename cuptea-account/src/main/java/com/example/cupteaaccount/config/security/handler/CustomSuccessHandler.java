@@ -9,6 +9,7 @@ import com.example.db.user.enums.UserRole;
 import com.example.db.user.repository.JoinUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -71,12 +73,22 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // refresh token 저장
         findUser.setRefreshToken(refreshToken);
 
+
         try {
-            response.getWriter().write(objectMapper.writeValueAsString(accessToken));
+            response.sendRedirect(getUriComponentsBuilder(accessToken.getToken()));
         } catch (Exception e) {
             log.error("[CustomSuccessHandler()] token json stringify 오류  >>>>>>>>>>>>>>>>>>>");
             log.error("", e);
         }
 
     }
+
+    private String getUriComponentsBuilder(String accessToken) {
+        return UriComponentsBuilder.fromUriString("http://localhost:5173")
+                .queryParam("token", accessToken)
+                .build()
+                .toUriString();
+    }
+
+
 }

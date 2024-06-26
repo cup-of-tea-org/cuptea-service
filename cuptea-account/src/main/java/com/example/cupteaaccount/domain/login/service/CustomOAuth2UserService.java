@@ -46,6 +46,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         // API 정보
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
+
         OAuthAttributes oAuthAttributes = new OAuthAttributes();
         oAuthAttributes = oAuthAttributes.of(socialType, usernameAttributeName, attributes);
 
@@ -73,9 +74,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     }
 
-    @Transactional
-    public UserEntity getUser(OAuthAttributes oAuthAttributes, SocialType socialType) {
-        UserEntity user = userRepository.findByLoginId(oAuthAttributes.getOAuth2Response().getNickname());
+    private UserEntity getUser(OAuthAttributes oAuthAttributes, SocialType socialType) {
+        UserEntity user = userRepository.findByLoginId(oAuthAttributes.getOAuth2Response().getId());
 
         if (user == null) {
             return createUser(oAuthAttributes, socialType);
