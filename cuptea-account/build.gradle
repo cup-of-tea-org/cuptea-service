@@ -26,8 +26,11 @@ dependencies {
 
 bootJar {
     enabled = true
+    destinationDirectory = file("$buildDir/custom-jar")
 }
 
 jar {
     enabled = false
 }
+
+
