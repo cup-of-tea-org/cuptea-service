@@ -6,7 +6,7 @@ for jar in /app/*.jar; do
     continue
   fi
 
-  java -jar -Dspring.profiles.active=dev "$jar" &ef
+  java -jar -Dspring.profiles.active=dev "$jar" &
 done
 
 wait
