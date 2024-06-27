@@ -9,6 +9,8 @@ COPY ./cuptea-cloud/build/libs/*.jar /app/cuptea-cloud.jar
 
 COPY run-jars.sh /app/run-jars.sh
 
+COPY ./docker-compose.yml /app/docker-compose.yml
+
 RUN chmod +x /app/run-jars.sh
 
 ENTRYPOINT ["/app/run-jars.sh"]
