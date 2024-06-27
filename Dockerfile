@@ -7,7 +7,7 @@ COPY ./cuptea-api/build/libs/*.jar /app/cuptea-api.jar
 COPY ./cuptea-db/build/libs/*.jar /app/cuptea-db.jar
 COPY ./cuptea-cloud/build/libs/*.jar /app/cuptea-cloud.jar
 
-COPY run-jars.sh /app/run-jars.sh
+COPY ./run-jars.sh /app/run-jars.sh
 
 COPY ./docker-compose.yml /app/docker-compose.yml
 
