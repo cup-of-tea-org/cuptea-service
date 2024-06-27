@@ -94,7 +94,6 @@ jobs:
           
           sudo docker rmi ${{secrets.EC2_HOST}}:5000/${{ secrets.BACKEND_PROJECT_NAME }}:latest          
           sudo docker pull ${{secrets.EC2_HOST}}:5000${{ secrets.BACKEND_PROJECT_NAME }}:latest
-      # 프론트 컨테이너 재시작
           sudo docker restart ${{ secrets.FRONTEND_PROJECT_NAME }}
             
           sudo docker run -p ${{ secrets.BACKEND_PORT }}:${{ secrets.BACKEND_PORT }} \
