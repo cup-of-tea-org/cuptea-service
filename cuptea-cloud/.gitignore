@@ -2,3 +2,5 @@ src/main/resources/application.yml
 application.yml
 src/main/resources/application-local.yml
 application-local.yml
+src/main/resources/application-dev.yml
+application-dev.yml
