@@ -1,9 +1,12 @@
+#!/bin/bash
+
+
 for jar in /app/*.jar; do
-  if [[ "$jar" == *"cuptea-db" ]]; then
+  if [[ "$jar" == *"cuptea-db"* ]]; then
     continue
   fi
 
-  java -jar -Dspring.profiles.active=dev "$jar" &
+  java -jar -Dspring.profiles.active=dev "$jar" &ef
 done
 
 wait
