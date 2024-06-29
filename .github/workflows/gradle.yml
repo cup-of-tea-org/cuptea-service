@@ -86,7 +86,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         script: |
           sudo docker rm -f ${{ secrets.BACKEND_PROJECT_NAME }}
-          sudo docker rmi ${{secrets.EC2_HOST}}:5000/${{ secrets.BACKEND_PROJECT_NAME }}:latest
+          sudo docker rmi ${{ secrets.EC2_HOST }}:5000/${{ secrets.BACKEND_PROJECT_NAME }}:latest
           
           sudo docker pull ${{secrets.EC2_HOST}}:5000/${{ secrets.BACKEND_PROJECT_NAME }}:latest
           

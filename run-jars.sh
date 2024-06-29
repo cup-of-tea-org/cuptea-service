@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for jar in /app/*.jar; do
+for jar in /app; do
   if [[ "$jar" == *"cuptea-db"* ]]; then
     continue
   fi
