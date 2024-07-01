@@ -24,7 +24,7 @@ public class RouteConfig {
                                             filterSpec.filter(serviceApiPrivateFilter.apply(new ServiceApiPrivateFilter.Config()));
                                             return filterSpec.rewritePath("/service-api/api/(?<segment>/?.*)", "$/{segment}");
                                         })
-                        .uri("http://localhost:9090"))
+                        .uri("http://52.79.137.212:9090"))
                 .build();
     }
 }
