@@ -5,7 +5,7 @@ for jar in /app/*.jar; do
     continue
   fi
   echo "RUNNING $jar"
-  java -jar -Dspring.profiles.active=dev "$jar" &
+  java -jar -Dspring.profiles.active=dev "$jar" > /"$jar".log 2>&1 &
 done
 
 wait

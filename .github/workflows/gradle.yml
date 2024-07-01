@@ -45,7 +45,7 @@ jobs:
       run: |
         mkdir ./cuptea-db/src/main/resources
         cd ./cuptea-db/src/main/resources
-        touch ./application.yml
+        touch ./application-dev.yml
         echo "${{ secrets.CUPTEA_DB_YML }}" > ./application-dev.yml
 
     #Gradle Build 권한 부여
