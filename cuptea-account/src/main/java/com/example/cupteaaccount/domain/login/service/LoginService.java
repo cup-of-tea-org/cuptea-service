@@ -7,9 +7,9 @@ import com.example.cupteaaccount.domain.login.controller.model.dto.FindPasswordR
 import com.example.cupteaaccount.domain.login.controller.model.dto.UpdatePasswordRequestDto;
 import com.example.cupteaaccount.domain.login.exception.UserNotFoundException;
 import com.example.cupteaaccount.util.MailHelper;
-import com.example.db.user.EmailCodeEntity;
+import com.example.db.user.repository.redis.EmailCodeEntity;
 import com.example.db.user.UserEntity;
-import com.example.db.user.repository.EmailCodeRedisRepository;
+import com.example.db.user.repository.redis.EmailCodeRedisRepository;
 import com.example.db.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

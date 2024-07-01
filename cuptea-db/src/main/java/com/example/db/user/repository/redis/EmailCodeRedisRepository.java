@@ -1,6 +1,5 @@
-package com.example.db.user.repository;
+package com.example.db.user.repository.redis;
 
-import com.example.db.user.EmailCodeEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

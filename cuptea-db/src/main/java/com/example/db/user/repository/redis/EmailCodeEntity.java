@@ -1,4 +1,4 @@
-package com.example.db.user;
+package com.example.db.user.repository.redis;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,6 @@ public class EmailCodeEntity {
 
     @Id
     private UUID id;
-
     private String emailCode;
 
 
