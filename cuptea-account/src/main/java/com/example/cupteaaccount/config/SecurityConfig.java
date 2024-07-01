@@ -98,7 +98,7 @@ public class SecurityConfig {
                     cors.configurationSource(request -> {
                         // cors 설정
                         CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Collections.singletonList("*"));
+                        config.setAllowedOrigins(Collections.singletonList("http://52.79.137.212"));
                         // config.setAllowedOrigins(Collections
 //                        .singletonList("http://52.79.137.212:3000"));
                         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
