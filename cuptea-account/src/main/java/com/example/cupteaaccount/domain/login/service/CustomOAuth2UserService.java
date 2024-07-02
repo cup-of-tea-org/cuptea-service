@@ -34,7 +34,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
         log.info("Login OAuth2User : {}", oAuth2User);
 
-        // 어디 플랫폼 Kakao || Google ??
+        // 어디 플랫폼 Kakao || Google ?
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         // 소셜 타입 받아와서
         SocialType socialType = getSocialType(registrationId);
