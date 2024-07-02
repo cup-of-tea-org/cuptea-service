@@ -17,6 +17,9 @@ public class CustomFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+
+        log.info("fail uri = {}", request.getRequestURI());
+
         log.info("소셜 로그인 실패");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
