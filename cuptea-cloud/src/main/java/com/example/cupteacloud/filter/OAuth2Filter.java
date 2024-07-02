@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OAuth2Filter extends AbstractGatewayFilterFactory<OAuth2Filter.Config> {
 
+    // OAUTH2 처음 요청 보낼때 필터
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
