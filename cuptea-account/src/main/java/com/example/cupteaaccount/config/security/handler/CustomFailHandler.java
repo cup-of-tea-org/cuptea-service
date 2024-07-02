@@ -20,6 +20,8 @@ public class CustomFailHandler extends SimpleUrlAuthenticationFailureHandler {
 
         log.info("fail uri = {}", request.getRequestURI());
 
+        log.info("fail port = {}", request.getServerPort());
+
         log.info("소셜 로그인 실패");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
