@@ -84,7 +84,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private String getUriComponentsBuilder(String accessToken) {
-        return UriComponentsBuilder.fromUriString("http://52.79.137.212:5173")
+        return UriComponentsBuilder.fromUriString("http://52.79.137.212")
                 .queryParam("token", accessToken)
                 .build()
                 .toUriString();
