@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class OAuth2RedirectFilter extends AbstractGatewayFilterFactory<OAuth2RedirectFilter.Config> {
-
+    // redirect
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
