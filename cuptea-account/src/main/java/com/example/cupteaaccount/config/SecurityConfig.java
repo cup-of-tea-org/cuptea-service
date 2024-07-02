@@ -96,7 +96,7 @@ public class SecurityConfig {
         http
                 .cors((cors) -> {
                     cors.configurationSource(request -> {
-                        // cors 설정
+                        // cors 설정 dev
                         CorsConfiguration config = new CorsConfiguration();
                         config.setAllowedOriginPatterns(Arrays.asList(
                                 "http://cuptea.site",
