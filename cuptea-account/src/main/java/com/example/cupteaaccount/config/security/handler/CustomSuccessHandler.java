@@ -36,6 +36,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
+        // nickname = loginId
         log.info("oauth2 성공 user : {}", customOAuth2User.getNickname());
 
         // principal 객체에서 nickname 추출
@@ -46,9 +47,15 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         log.info("userRole = {}", role);
 
+        // loginId로 회원 정보 조회
+        UserEntity findUser = Objects.requireNonNull(joinUserRepository.findByLoginId(customOAuth2User.getNickname()), () -> {
+            throw new UserNotFoundException("회원 정보를 찾을 수 없습니다.");
+        });
+
+        log.info("[CustomSuccessHandler] findUser = {}", findUser);
 
         String token = jwtHelper.createToken(
-                customOAuth2User.getUserId(),
+                findUser.getId(),
                 nickname,
                 role,
                 1800000L // 30분
@@ -59,22 +66,17 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 .token(token)
                 .build();
         String refreshToken = jwtHelper.createToken(
-                customOAuth2User.getUserId(),
+                findUser.getId(),
                 nickname,
                 role,
                 86400000L // 하루 24시간
         );
 
-        // loginId로 회원 정보 조회
-        UserEntity findUser = Objects.requireNonNull(joinUserRepository.findByLoginId(customOAuth2User.getNickname()), () -> {
-            throw new UserNotFoundException("회원 정보를 찾을 수 없습니다.");
-        });
-
-        log.info("[CustomSuccessHandler] findUser = {}", findUser);
-
         // refresh token 저장
-        findUser.setRefreshToken(refreshToken);
 
+        findUser.setRefreshToken(refreshToken);
+        // 영속성 컨텍스트가 떠있지 않으므로 save 호출?
+        joinUserRepository.save(findUser);
 
         try {
             response.sendRedirect(getUriComponentsBuilder(accessToken.getToken()));
