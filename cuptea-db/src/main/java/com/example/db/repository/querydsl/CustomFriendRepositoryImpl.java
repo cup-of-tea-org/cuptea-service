@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-import static com.example.db.domain.friend.QFriendEntity.*;
+import static com.example.db.domain.model.entity.friend.QFriendEntity.friendEntity;
+
 
 @RequiredArgsConstructor
 public class CustomFriendRepositoryImpl implements CustomFriendRepository {
