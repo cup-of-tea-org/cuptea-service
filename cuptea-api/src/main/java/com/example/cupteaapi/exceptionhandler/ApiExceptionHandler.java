@@ -1,9 +1,7 @@
 package com.example.cupteaapi.exceptionhandler;
 
-import com.example.cupteaapi.domain.user.exception.UserNotFoundException;
-import jakarta.validation.ConstraintViolationException;
+import com.example.cupteaapi.exceptionhandler.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

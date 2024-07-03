@@ -2,11 +2,11 @@ package com.example.cupteaaccount.domain.login.service;
 
 import com.example.cupteaaccount.domain.login.model.oauth2.CustomOAuth2User;
 import com.example.cupteaaccount.domain.login.model.oauth2.OAuthAttributes;
-import com.example.db.user.UserEntity;
-import com.example.db.user.enums.Interest;
-import com.example.db.user.enums.SocialType;
-import com.example.db.user.enums.UserRole;
-import com.example.db.user.repository.UserRepository;
+import com.example.db.domain.model.entity.user.UserEntity;
+import com.example.db.domain.model.entity.user.enums.Interest;
+import com.example.db.domain.model.entity.user.enums.SocialType;
+import com.example.db.domain.model.entity.user.enums.UserRole;
+import com.example.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +16,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Map;

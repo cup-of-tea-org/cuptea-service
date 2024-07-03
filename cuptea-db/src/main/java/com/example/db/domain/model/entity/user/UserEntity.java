@@ -1,9 +1,9 @@
-package com.example.db.user;
+package com.example.db.domain.model.entity.user;
 
 import com.example.db.common.model.BaseEntity;
-import com.example.db.user.enums.Interest;
-import com.example.db.user.enums.SocialType;
-import com.example.db.user.enums.UserRole;
+import com.example.db.domain.model.entity.user.enums.Interest;
+import com.example.db.domain.model.entity.user.enums.SocialType;
+import com.example.db.domain.model.entity.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

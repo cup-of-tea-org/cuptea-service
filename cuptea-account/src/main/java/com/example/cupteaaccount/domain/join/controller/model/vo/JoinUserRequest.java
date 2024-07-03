@@ -1,14 +1,11 @@
 package com.example.cupteaaccount.domain.join.controller.model.vo;
 
 import com.example.cupteaaccount.domain.join.controller.annotation.ProvisionIsValid;
-import com.example.db.user.enums.Interest;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter

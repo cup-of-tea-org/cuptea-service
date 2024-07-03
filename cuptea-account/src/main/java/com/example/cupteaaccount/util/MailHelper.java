@@ -1,7 +1,7 @@
 package com.example.cupteaaccount.util;
 
 import com.example.cupteaaccount.common.model.Mail;
-import com.example.db.user.repository.redis.EmailCodeRedisRepository;
+import com.example.db.repository.redis.EmailCodeRedisRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

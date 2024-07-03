@@ -1,8 +1,8 @@
 package com.example.cupteaaccount.domain.login.service;
 
 import com.example.cupteaaccount.config.security.user.CustomUserDetails;
-import com.example.db.user.UserEntity;
-import com.example.db.user.repository.UserRepository;
+import com.example.db.domain.model.entity.user.UserEntity;
+import com.example.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

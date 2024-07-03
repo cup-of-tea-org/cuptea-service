@@ -8,6 +8,7 @@ import com.example.cupteaaccount.domain.join.controller.model.vo.*;
 import com.example.cupteaaccount.domain.join.controller.model.dto.JoinUserDto;
 import com.example.cupteaaccount.domain.join.service.JoinService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@Tag(name = "회원가입", description = "회원가입 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/open-api/user")
@@ -29,7 +31,6 @@ public class JoinController {
     private final ModelMapper modelMapper;
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ApiResponse(description = "회원가입 API")
     public ResponseEntity<?> join(
             @RequestPart(required = false, value = "file") @Valid @FileIsValid MultipartFile file,
             @RequestPart @Valid final JoinUserRequest joinUserRequest,
@@ -54,7 +55,6 @@ public class JoinController {
 
 
     @PostMapping(value = "/validate-id", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiResponse(description = "아이디 중복 체크 API")
     public ResponseEntity<?> idOverlapped(
             @RequestBody @Valid final JoinIdOverlappedRequest joinIdOverlappedRequest,
             Errors errors

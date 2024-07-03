@@ -1,12 +1,8 @@
 package com.example.cupteaaccount.domain.join.controller.model.dto;
 
-import com.example.db.user.enums.Interest;
-import com.example.db.user.enums.SocialType;
-import com.example.db.user.enums.UserRole;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

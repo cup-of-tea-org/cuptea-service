@@ -1,4 +1,4 @@
-package com.example.cupteaapi.domain.user.exception;
+package com.example.cupteaapi.exceptionhandler.exception;
 
 import lombok.NoArgsConstructor;
 

@@ -10,6 +10,7 @@ import com.example.cupteaaccount.domain.login.controller.model.vo.FindIdResponse
 import com.example.cupteaaccount.domain.login.controller.model.vo.FindPasswordRequest;
 import com.example.cupteaaccount.domain.login.controller.model.vo.UpdatePasswordRequest;
 import com.example.cupteaaccount.domain.login.service.LoginService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * 로그인은 시큐리티 필터 쪽에서 진행 이름만 LoginController 라고 명시한 클래스
  * (아이디, 비밀번호 찾기)
  */
+@Tag(name = "로그인", description = "로그인 관련 API")
 @RestController
 @RequestMapping("/open-api/user")
 @RequiredArgsConstructor

@@ -1,7 +1,6 @@
 package com.example.cupteaaccount.domain.token.jwt;
 
-import com.example.db.user.enums.UserRole;
-import io.jsonwebtoken.JwtException;
+import com.example.db.domain.model.entity.user.enums.UserRole;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

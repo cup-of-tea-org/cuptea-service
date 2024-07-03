@@ -1,6 +1,6 @@
 package com.example.cupteaaccount.config.security.user;
 
-import com.example.db.user.UserEntity;
+import com.example.db.domain.model.entity.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

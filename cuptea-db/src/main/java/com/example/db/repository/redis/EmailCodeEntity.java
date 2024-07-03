@@ -1,4 +1,4 @@
-package com.example.db.user.repository.redis;
+package com.example.db.repository.redis;
 
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;

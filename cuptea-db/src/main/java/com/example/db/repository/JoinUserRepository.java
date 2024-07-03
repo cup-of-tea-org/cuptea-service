@@ -1,9 +1,8 @@
-package com.example.db.user.repository;
+package com.example.db.repository;
 
-import com.example.db.user.UserEntity;
+import com.example.db.domain.model.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public interface JoinUserRepository extends JpaRepository<UserEntity, UUID> {

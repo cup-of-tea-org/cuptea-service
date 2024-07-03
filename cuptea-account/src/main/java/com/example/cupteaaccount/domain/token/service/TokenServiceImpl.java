@@ -4,8 +4,8 @@ import com.example.cupteaaccount.domain.login.exception.UserNotFoundException;
 import com.example.cupteaaccount.domain.token.controller.model.TokenDto;
 import com.example.cupteaaccount.domain.token.exception.TokenNotFoundException;
 import com.example.cupteaaccount.domain.token.jwt.JwtHelper;
-import com.example.db.user.UserEntity;
-import com.example.db.user.repository.JoinUserRepository;
+import com.example.db.domain.model.entity.user.UserEntity;
+import com.example.db.repository.JoinUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

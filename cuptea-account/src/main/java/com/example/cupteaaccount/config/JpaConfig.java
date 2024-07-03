@@ -8,6 +8,6 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @Configuration
 @EntityScan(basePackages = "com.example.db")
 @EnableJpaRepositories(basePackages = "com.example.db")
-@EnableRedisRepositories(basePackages = "com.example.db.user.repository.redis")
+@EnableRedisRepositories(basePackages = "com.example.db.repository.redis")
 class JpaConfig {
 }

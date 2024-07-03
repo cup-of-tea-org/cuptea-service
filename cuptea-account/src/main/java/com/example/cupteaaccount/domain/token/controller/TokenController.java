@@ -4,6 +4,7 @@ import com.example.cupteaaccount.domain.token.controller.model.TokenValidationRe
 import com.example.cupteaaccount.domain.token.service.TokenService;
 import com.example.cupteaaccount.domain.token.controller.model.TokenDto;
 import com.example.cupteaaccount.domain.token.controller.model.TokenValidationRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Token", description = "토큰 관련 API")
 @RestController
 @RequiredArgsConstructor
 @Slf4j

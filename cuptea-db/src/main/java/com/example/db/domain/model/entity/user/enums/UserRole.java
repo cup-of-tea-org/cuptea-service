@@ -1,4 +1,4 @@
-package com.example.db.user.enums;
+package com.example.db.domain.model.entity.user.enums;
 
 public enum UserRole {
 
