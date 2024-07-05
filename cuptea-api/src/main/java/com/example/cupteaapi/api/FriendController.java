@@ -2,6 +2,7 @@ package com.example.cupteaapi.api;
 
 import com.example.cupteaapi.api.model.vo.CreateFriendRequest;
 import com.example.cupteaapi.api.model.vo.DeleteFriendResponse;
+import com.example.cupteaapi.api.model.vo.SearchFriendResponse;
 import com.example.cupteaapi.api.model.vo.SearchFriendsResponse;
 import com.example.cupteaapi.service.FriendService;
 import com.example.db.domain.model.dto.CreateFriendDto;
@@ -55,6 +56,21 @@ public class FriendController {
                         friendService.findAllFriends()
                                 .stream().map(SearchFriendsResponse::of)
                                 .collect(Collectors.toList())
+                );
+    }
+
+    @Operation(summary = "친구 조회 API")
+    @GetMapping("/friend/{friendId}")
+    public ResponseEntity<?> findFriend(@PathVariable final String friendId) {
+
+        if (friendId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok()
+                .body(
+                        modelMapper.map(
+                                friendService.findFriend(friendId), SearchFriendResponse.class)
                 );
     }
 

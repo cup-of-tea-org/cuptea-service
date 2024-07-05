@@ -19,9 +19,10 @@ public class CustomFriendRepositoryImpl implements CustomFriendRepository {
     public List<FriendDto> findAllFriendsByMemberId(final UUID memberId) {
         return jpaQueryFactory
                 .select(
-                        Projections.constructor(
+                        Projections.fields(
                                 FriendDto.class,
                                 friendEntity.id,
+                                friendEntity.friendLoginId,
                                 friendEntity.memberId,
                                 friendEntity.isFriend,
                                 friendEntity.blockCount

@@ -12,4 +12,5 @@ public interface FriendRepository extends JpaRepository<FriendEntity, UUID>, Cus
     FriendEntity findByMemberIdAndFriendLoginId(UUID memberId, String friendLoginId);
 
     Optional<FriendEntity> findByFriendLoginIdAndMemberId(String friendLoginId, UUID memberId);
+
 }

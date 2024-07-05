@@ -1,17 +1,17 @@
-package com.example.db.domain.model.dto;
+package com.example.cupteaapi.api.model.vo;
 
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.util.UUID;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class FriendDto {
+@Getter
+@Setter
+public class SearchFriendResponse {
 
     private UUID id;
 
@@ -22,5 +22,4 @@ public class FriendDto {
     private String friendLoginId;
 
     private Integer blockCount;
-
 }

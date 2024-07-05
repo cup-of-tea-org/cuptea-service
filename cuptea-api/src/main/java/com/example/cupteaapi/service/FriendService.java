@@ -1,7 +1,6 @@
 package com.example.cupteaapi.service;
 
 import com.example.cupteaapi.api.model.vo.CreateFriendResponse;
-import com.example.cupteaapi.api.model.vo.SearchFriendsResponse;
 import com.example.cupteaapi.exceptionhandler.exception.FriendAlreadyExistException;
 import com.example.cupteaapi.exceptionhandler.exception.FriendNotFoundException;
 import com.example.cupteaapi.exceptionhandler.exception.UserNotFoundException;
@@ -40,6 +39,30 @@ public class FriendService {
 
         return CreateFriendResponse.builder()
                 .friendLoginId(saveFriend.getFriendLoginId())
+                .build();
+    }
+
+    /**
+     * 친구 단일 조회
+     */
+
+    @Transactional(readOnly = true)
+    public FriendDto findFriend(final String friendLoginId) {
+        var userId = Objects.requireNonNull(RequestContextHolder.getRequestAttributes()).getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+        // null check
+        if (userId == null) {
+            throw new UserNotFoundException("RequestContextHolder userId 없음");
+        }
+
+        log.info("[FriendService] RequestContextHolder userId = {}", userId);
+
+        FriendEntity findFriend = friendRepository.findByFriendLoginIdAndMemberId(friendLoginId, UUID.fromString(userId.toString()))
+                .orElseThrow(() -> new FriendNotFoundException("친구를 찾을 수 없습니다."));
+
+        return FriendDto.builder()
+                .id(findFriend.getId())
+                .memberId(findFriend.getMemberId())
+                .isFriend(findFriend.getIsFriend())
                 .build();
     }
 
