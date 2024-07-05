@@ -20,4 +20,5 @@ public class FriendDto {
     private String isFriend;
 
     private Integer blockCount;
+
 }

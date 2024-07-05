@@ -20,7 +20,7 @@ import java.util.UUID;
 public class FriendEntity extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "member_id")
@@ -31,6 +31,9 @@ public class FriendEntity extends BaseEntity {
 
     @Column(name = "block_count")
     private Integer blockCount;
+
+    @Column(name = "friend_login_id")
+    private String friendLoginId;
 
     @PrePersist
     public void prePersist() {

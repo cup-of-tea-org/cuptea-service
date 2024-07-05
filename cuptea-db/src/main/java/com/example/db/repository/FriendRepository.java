@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface FriendRepository extends JpaRepository<FriendEntity, UUID>, CustomFriendRepository {
 
+    FriendEntity findByMemberIdAndFriendLoginId(UUID memberId, String friendLoginId);
+
 }

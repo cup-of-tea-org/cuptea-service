@@ -1,4 +1,4 @@
-package com.example.cupteaapi.api.model;
+package com.example.cupteaapi.api.model.vo;
 
 import com.example.db.domain.model.dto.FriendDto;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class FriendsSearchResponse {
+public class SearchFriendsRequest {
 
     private List<FriendDto> friends;
 }
