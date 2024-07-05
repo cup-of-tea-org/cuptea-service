@@ -68,9 +68,7 @@ public class FriendService {
                 .getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
 
         FriendEntity findFriend = friendRepository.findByFriendLoginIdAndMemberId(friendLoginId, userId)
-                .orElseThrow(
-                        () -> new FriendNotFoundException("친구를 찾을 수 없습니다.")
-                );
+                .orElseThrow(() -> new FriendNotFoundException("친구를 찾을 수 없습니다."));
         // 상태 N으로 변경
         findFriend.setIsFriend("N");
 

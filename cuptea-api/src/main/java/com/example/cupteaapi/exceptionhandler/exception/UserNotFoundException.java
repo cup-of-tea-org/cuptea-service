@@ -2,9 +2,11 @@ package com.example.cupteaapi.exceptionhandler.exception;
 
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 public class UserNotFoundException extends RuntimeException {
 
+    public UserNotFoundException() {
+        super();
+    }
 
     public UserNotFoundException(String message) {
         super(message);

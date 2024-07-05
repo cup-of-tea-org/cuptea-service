@@ -60,6 +60,8 @@ public class JoinServiceImpl implements JoinService {
         // create UserEntity
         final UserEntity user = getUserEntity(joinUserDto, uploadFilename, convertInterest);
 
+        log.info("[JoinServiceImpl] %join% user = {}", user.toString());
+
         // MySQL 저장
         joinUserRepository.save(user);
 
