@@ -1,6 +1,7 @@
 package com.example.cupteaapi.exceptionhandler;
 
 import com.example.cupteaapi.exceptionhandler.exception.FriendAlreadyExistException;
+import com.example.cupteaapi.exceptionhandler.exception.FriendNotFoundException;
 import com.example.cupteaapi.exceptionhandler.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,16 @@ public class ApiExceptionHandler {
 
         // 친구가 이미 존재할 시
         @ExceptionHandler(value = FriendAlreadyExistException.class)
-        public ResponseEntity<?> tokenNotFoundException(FriendAlreadyExistException e) {
+        public ResponseEntity<?> friendAlreadyExistException(FriendAlreadyExistException e) {
             log.error("", e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    // 찾을 수 없는 친구
+    @ExceptionHandler(value = FriendNotFoundException.class)
+    public ResponseEntity<?> friendNotFoundException(FriendNotFoundException e) {
+        log.error("", e.getMessage());
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
 
 

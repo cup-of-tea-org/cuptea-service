@@ -1,6 +1,7 @@
 package com.example.cupteaapi.api;
 
 import com.example.cupteaapi.api.model.vo.CreateFriendRequest;
+import com.example.cupteaapi.api.model.vo.DeleteFriendResponse;
 import com.example.cupteaapi.api.model.vo.SearchFriendsResponse;
 import com.example.cupteaapi.service.FriendService;
 import com.example.db.domain.model.dto.CreateFriendDto;
@@ -56,4 +57,21 @@ public class FriendController {
                                 .collect(Collectors.toList())
                 );
     }
+
+    @Operation(summary = "친구 삭제 API")
+    @DeleteMapping("/friend/{friendId}")
+    public ResponseEntity<?> deleteFriend(@PathVariable final String friendId) {
+
+        if (friendId == null) {
+            return ResponseEntity.badRequest().body("친구 아이디가 비었습니다.");
+        }
+
+        return ResponseEntity.ok()
+                .body(
+                        modelMapper.map(
+                                friendService.deleteFriend(friendId), DeleteFriendResponse.class
+                        )
+                );
+    }
+
 }
