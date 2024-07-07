@@ -3,6 +3,7 @@ package com.example.cupteaapi;
 import com.example.cupteaapi.api.model.vo.CreateFriendResponse;
 import com.example.cupteaapi.service.FriendService;
 import com.example.db.domain.model.dto.CreateFriendDto;
+import com.example.db.domain.model.entity.friend.FriendEntity;
 import com.example.db.domain.model.entity.user.UserEntity;
 import com.example.db.domain.model.entity.user.enums.Interest;
 import com.example.db.domain.model.entity.user.enums.SocialType;
@@ -18,13 +19,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class FriendServiceTest {
 
     @Autowired
@@ -32,6 +36,9 @@ class FriendServiceTest {
 
     @Autowired
     FriendService friendService;
+
+    @Autowired
+    FriendRepository friendRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -88,7 +95,7 @@ class FriendServiceTest {
 
     @Test
     @DisplayName("친구 추가")
-    public void createFriend() {
+    void createFriend() {
 
         // Given
         final UserEntity findUser = userRepository.findByLoginId("test1");
@@ -103,6 +110,26 @@ class FriendServiceTest {
 
         // Then
         assertThat(createFriend.getFriendLoginId()).isEqualTo("test2");
+    }
+
+    @Test
+    @DisplayName("친구 조회")
+    void test() throws Exception {
+        // Given
+
+        final UserEntity findUser = userRepository.findByLoginId("test1");
+
+        final CreateFriendResponse createFriend = friendService.createFriend(CreateFriendDto.builder()
+                .memberId(findUser.getId())
+                .isFriend("Y")
+                .friendLoginId("test2")
+                .build()
+        );
+        // When
+        final FriendEntity findFriend = friendRepository.findByMemberId(findUser.getId());
+        // Then
+
+        assertThat(friendRepository.findByMemberIdAndFriendLoginId(findUser.getId(), "test2")).isEqualTo(findFriend);
     }
 
 
