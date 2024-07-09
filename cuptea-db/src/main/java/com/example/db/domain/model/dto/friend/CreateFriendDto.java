@@ -1,4 +1,4 @@
-package com.example.db.domain.model.dto;
+package com.example.db.domain.model.dto.friend;
 
 import lombok.*;
 

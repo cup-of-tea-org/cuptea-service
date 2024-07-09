@@ -5,7 +5,7 @@ import com.example.cupteaapi.api.model.vo.DeleteFriendResponse;
 import com.example.cupteaapi.api.model.vo.SearchFriendResponse;
 import com.example.cupteaapi.api.model.vo.SearchFriendsResponse;
 import com.example.cupteaapi.service.FriendService;
-import com.example.db.domain.model.dto.CreateFriendDto;
+import com.example.db.domain.model.dto.friend.CreateFriendDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

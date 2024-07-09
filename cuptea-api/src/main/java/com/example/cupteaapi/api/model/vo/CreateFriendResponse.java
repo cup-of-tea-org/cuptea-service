@@ -1,6 +1,5 @@
 package com.example.cupteaapi.api.model.vo;
 
-import com.example.db.domain.model.dto.CreateFriendDto;
 import lombok.*;
 
 @Builder

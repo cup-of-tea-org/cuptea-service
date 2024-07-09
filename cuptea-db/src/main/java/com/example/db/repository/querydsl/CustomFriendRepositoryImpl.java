@@ -1,6 +1,6 @@
 package com.example.db.repository.querydsl;
 
-import com.example.db.domain.model.dto.FriendDto;
+import com.example.db.domain.model.dto.friend.FriendDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.example.cupteaapi;
 
 import com.example.cupteaapi.api.model.vo.CreateFriendResponse;
 import com.example.cupteaapi.service.FriendService;
-import com.example.db.domain.model.dto.CreateFriendDto;
+import com.example.db.domain.model.dto.friend.CreateFriendDto;
 import com.example.db.domain.model.entity.friend.FriendEntity;
 import com.example.db.domain.model.entity.user.UserEntity;
 import com.example.db.domain.model.entity.user.enums.Interest;
@@ -12,7 +12,6 @@ import com.example.db.repository.FriendRepository;
 import com.example.db.repository.JoinUserRepository;
 import com.example.db.repository.UserRepository;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
