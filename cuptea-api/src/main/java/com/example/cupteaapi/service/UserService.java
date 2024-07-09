@@ -40,7 +40,7 @@ public class UserService {
 
     // UserEntity -> UserResponseDto 변환
     private UserResponseDto getUserDto(final UserEntity findUser) {
-        UserResponseDto.builder()
+        return UserResponseDto.builder()
                 .loginId(findUser.getLoginId())
                 .email(findUser.getEmail())
                 .phone(findUser.getPhone())
