@@ -16,7 +16,7 @@ import java.util.UUID;
 @Getter
 @EqualsAndHashCode(of = "boardId", callSuper = true)
 @ToString(callSuper = true)
-@Table(name = "Board")
+@Table(name = "board")
 /**
  * 방명록
  */
@@ -34,6 +34,12 @@ public class BoardEntity extends BaseEntity {
 
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;
+
+    @Column(name = "like_count")
+    private Integer likeCount;
+
+    @Column(name = "board_count")
+    private Integer boardCount;
 
     @Column(name = "use_yn", length = 1)
     private String useYn;
