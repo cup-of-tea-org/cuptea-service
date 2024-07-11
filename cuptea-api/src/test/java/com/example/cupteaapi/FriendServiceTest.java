@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -112,7 +113,7 @@ class FriendServiceTest {
 
     @Test
     @DisplayName("친구 조회")
-    void test() throws Exception {
+    void findFriend() throws Exception {
         // Given
 
         final UserEntity findUser = userRepository.findByLoginId("test1");
@@ -128,6 +129,30 @@ class FriendServiceTest {
         // Then
 
         assertThat(friendRepository.findByMemberIdAndFriendLoginId(findUser.getId(), "test2")).isEqualTo(findFriend);
+    }
+
+    @Test
+    @DisplayName("친구 전체 조회")
+    void fidnFriends() throws Exception {
+        // Given
+        UUID memberId = userRepository.findByLoginId("test1").getId();
+        friendRepository.saveAll(
+                List.of(
+                        FriendEntity.builder()
+                                .memberId(memberId)
+                                .isFriend("Y")
+                                .friendLoginId("test2")
+                                .build(),
+                        FriendEntity.builder()
+                                .memberId(memberId)
+                                .isFriend("Y")
+                                .friendLoginId("test3")
+                                .build()
+                )
+        );
+        // When
+        // Then
+        assertThat(friendRepository.findAllFriendsByMemberId(memberId).size()).isEqualTo(2);
     }
 
 

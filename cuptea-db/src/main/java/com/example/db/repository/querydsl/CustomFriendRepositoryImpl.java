@@ -27,6 +27,7 @@ public class CustomFriendRepositoryImpl implements CustomFriendRepository {
                                 friendEntity.isFriend,
                                 friendEntity.blockCount
                         ))
+                .from(friendEntity)
                 .where(
                         friendEntity.memberId.eq(memberId)
                         .and(friendEntity.isFriend.eq("Y")))
