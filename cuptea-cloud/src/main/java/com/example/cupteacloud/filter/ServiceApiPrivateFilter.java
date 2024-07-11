@@ -43,19 +43,23 @@ public class ServiceApiPrivateFilter extends AbstractGatewayFilterFactory<Servic
              */
 
             var authHeaders = exchange.getRequest().getHeaders().get("Authorization");
-            var authCookies = exchange.getRequest().getCookies().get("Authorization");
+//            var authCookies = exchange.getRequest().getCookies().get("Authorization");
 
-            String token = null;
+//            if (authHeaders.isEmpty() || authHeaders == null) {
+//                if (authCookies.isEmpty() || authCookies == null) {
+//                    throw new TokenNotFoundException("토큰이 없습니다.");
+//                } else {
+//                    token = authCookies.get(0).getValue();
+//                }
+//            } else {
+//                token = authHeaders.get(0);
+//            }
             if (authHeaders.isEmpty() || authHeaders == null) {
-                if (authCookies.isEmpty() || authCookies == null) {
-                    throw new TokenNotFoundException("토큰이 없습니다.");
-                } else {
-                    token = authCookies.get(0).getValue();
-                }
-            } else {
-                token = authHeaders.get(0);
+                throw new TokenNotFoundException("토큰이 없습니다.");
             }
-
+            String token = null;
+            // 토큰 추출
+            token = authHeaders.get(0);
             log.info("Authorization header token : {}", token);
 
             // 2. 토큰 유효성 검증
