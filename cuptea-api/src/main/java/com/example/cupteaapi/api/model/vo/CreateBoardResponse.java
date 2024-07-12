@@ -1,5 +1,6 @@
 package com.example.cupteaapi.api.model.vo;
 
+import com.example.db.domain.model.dto.board.CreateBoardResponseDto;
 import lombok.*;
 
 import java.util.UUID;
@@ -13,6 +14,8 @@ import java.util.UUID;
 @Setter
 public class CreateBoardResponse {
 
+    private UUID boardId;
+
     private UUID memberId;
 
     private String text;
@@ -24,4 +27,16 @@ public class CreateBoardResponse {
     private Integer boardCount;
 
     private String useYn;
+
+    public static CreateBoardResponse of(final CreateBoardResponseDto createBoardResponseDto) {
+        return CreateBoardResponse.builder()
+                        .boardId(createBoardResponseDto.getBoardId())
+                        .memberId(createBoardResponseDto.getMemberId())
+                        .text(createBoardResponseDto.getText())
+                        .thumbnailUrl(createBoardResponseDto.getThumbnailUrl())
+                        .likeCount(createBoardResponseDto.getLikeCount())
+                        .boardCount(createBoardResponseDto.getBoardCount())
+                        .useYn(createBoardResponseDto.getUseYn())
+                        .build();
+    }
 }

@@ -8,14 +8,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode(of = "boardId")
+@EqualsAndHashCode
 @Getter
 @Setter
-public class CreateBoardResponseDto {
+public class UpdateBoardRequestDto {
 
     private UUID boardId;
-
-    private UUID memberId;
 
     private String subject;
 

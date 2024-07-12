@@ -11,11 +11,9 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "boardId")
 @Getter
 @Setter
-public class CreateBoardResponseDto {
+public class UpdateBoardResponseDto {
 
     private UUID boardId;
-
-    private UUID memberId;
 
     private String subject;
 

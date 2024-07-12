@@ -1,8 +1,5 @@
 package com.example.cupteaapi.api.model.vo;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.UUID;
@@ -14,25 +11,19 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class CreateBoardRequest {
+public class UpdateBoardRequest {
 
-    @NotBlank
-    private UUID memberId;
+    private UUID boardId;
 
-    @NotBlank
     private String subject;
 
-    @Size(min = 1, max = 2000)
     private String text;
 
     private String thumbnailUrl;
 
-    @PositiveOrZero
     private Integer likeCount;
 
-    @PositiveOrZero
     private Integer boardCount;
 
     private String useYn;
-
 }

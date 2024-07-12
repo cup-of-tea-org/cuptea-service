@@ -16,6 +16,8 @@ public class CreateBoardRequestDto {
 
     private UUID memberId;
 
+    private String subject;
+
     private String text;
 
     private String thumbnailUrl;

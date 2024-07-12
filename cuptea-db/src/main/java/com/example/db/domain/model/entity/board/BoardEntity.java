@@ -29,6 +29,9 @@ public class BoardEntity extends BaseEntity {
     @Column(name = "member_id")
     private UUID memberId;
 
+    @Column(name = "subject")
+    private String subject;
+
     @Lob
     private String text;
 
