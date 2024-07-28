@@ -1,5 +1,6 @@
 
 dependencies {
+    implementation project(':cuptea-db')
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -13,7 +14,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation:3.1.4'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     implementation 'javax.xml.bind:jaxb-api:2.3.0' // aws jaxb => java 9 버전 업시 해당 모듈이 제거되어서
-    implementation project(':cuptea-db')
+
 
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
