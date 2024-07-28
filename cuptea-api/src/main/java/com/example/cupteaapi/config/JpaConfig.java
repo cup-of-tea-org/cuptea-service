@@ -18,10 +18,10 @@ public class JpaConfig {
     @PersistenceContext
     private EntityManager em;
 
-    @Bean
-    public JPAQueryFactory jpaQueryFactory() {
-        return new JPAQueryFactory(em);
-    }
+//    @Bean
+//    public JPAQueryFactory jpaQueryFactory() {
+//        return new JPAQueryFactory(em);
+//    }
 
 
 }
