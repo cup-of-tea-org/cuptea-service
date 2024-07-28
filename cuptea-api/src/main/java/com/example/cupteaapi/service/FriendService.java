@@ -46,7 +46,6 @@ public class FriendService {
      * 친구 단일 조회
      */
 
-    @Transactional(readOnly = true)
     public FriendDto findFriend(final String friendLoginId) {
         var userId = Objects.requireNonNull(RequestContextHolder.getRequestAttributes()).getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
         // null check
@@ -69,7 +68,7 @@ public class FriendService {
     /**
      * 해당 멤버의 모든 친구 조회
      */
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<FriendDto> findAllFriends() {
 
         var userId = Objects.requireNonNull(RequestContextHolder.getRequestAttributes()).getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
