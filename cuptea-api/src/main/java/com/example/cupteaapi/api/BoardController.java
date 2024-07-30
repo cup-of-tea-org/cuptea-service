@@ -34,6 +34,13 @@ public class BoardController {
     private final AwsS3Service awsS3Service;
     private static final String DIR_NAME = "open";
 
+    @Operation(summary = "게시판 글 조회")
+    @GetMapping
+    public ResponseEntity<?> getBoard() {
+        // TODO 댓글까지 완료하고 만들기
+        return null;
+    }
+
 
     @Operation(summary = "게시판 글 생성")
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
