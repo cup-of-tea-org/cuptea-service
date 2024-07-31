@@ -1,6 +1,7 @@
 package com.example.cupteaapi.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,10 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createComment() {
-        // TODO 댓글 생성
+    public ResponseEntity<?> createComment(
+
+    ) {
+
         return null;
     }
 
