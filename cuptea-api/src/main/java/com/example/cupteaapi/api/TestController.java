@@ -23,6 +23,7 @@ public class TestController {
             @RequestBody @Valid final TestVo testVo,
             BindingResult bindingResult
     ) {
+        // validation example
         if (bindingResult.hasErrors()) {
 
             List<TestVo2> errorMessageList = bindingResult.getFieldErrors().stream().map(error -> {
